@@ -1,0 +1,13 @@
+<mat-card class="agent-card" @fadeIn>
+  <img mat-card-image [src]="agent.image" class="card-img" />
+
+  <mat-card-content>
+    <h3>{{ agent.title }}</h3>
+    <span class="category">{{ agent.category }}</span>
+    <p>{{ agent.description }}</p>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button color="primary" (click)="viewDetails(agent.id)">Find out more</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,24 @@
+<svg width="1200" height="800" class="flow-canvas">
+  <!-- Connections -->
+  <g class="edges">
+    <line
+      *ngFor="let e of edges"
+      [attr.x1]="getNode(e.from)?.x"
+      [attr.y1]="getNode(e.from)?.y"
+      [attr.x2]="getNode(e.to)?.x"
+      [attr.y2]="getNode(e.to)?.y"
+      stroke="black"/>
+  </g>
+
+  <!-- Nodes -->
+  <g class="nodes">
+    <g *ngFor="let n of nodes"
+       [attr.transform]="'translate(' + n.x + ',' + n.y + ')'">
+      <rect width="80" height="60" rx="6" ry="6"
+            stroke="black" fill="white"/>
+      <text x="40" y="35" text-anchor="middle">
+        {{ n.label }}
+      </text>
+    </g>
+  </g>
+</svg>

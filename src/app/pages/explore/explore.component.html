@@ -1,0 +1,26 @@
+<div class="page-container">
+
+    <!-- Header Row -->
+    <div class="header-row">
+        <h2>Explore</h2>
+        <button mat-raised-button colour="primary" class="create-btn">Create</button>
+    </div>
+
+    <!-- Category Chips -->
+    <div class="category-row">
+        <mat-chip-listbox>
+            <mat-chip-option *ngFor="let c of categories" [selected]="c === 'All'">
+                {{ c }}
+            </mat-chip-option>
+        </mat-chip-listbox>
+
+    </div>
+
+    <!-- Featured Section -->
+    <h3 class="section-title">Featured</h3>
+
+    <div class="cards-grid">
+        <app-agent-card *ngFor="let item of featured" [agent]="item"></app-agent-card>
+    </div>
+
+</div>
