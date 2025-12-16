@@ -1,16 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-agent-card',
   templateUrl: './agent-card.component.html',
   styleUrls: ['./agent-card.component.css'],
   standalone: true,
-  imports: [MatCardModule, MatButtonModule],
+  imports: [],
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
@@ -22,12 +18,9 @@ import { Router } from '@angular/router';
 })
 export class AgentCardComponent {
   @Input() agent: any;
+  @Output() viewDetails = new EventEmitter<any>();
 
-    constructor(private router: Router) {}
-
-
-  viewDetails(id: number): void {
-    console.log('id==',id)
-    this.router.navigate(['/flow-chart', id]);
+  onViewDetails(): void {
+    this.viewDetails.emit(this.agent);
   }
 }

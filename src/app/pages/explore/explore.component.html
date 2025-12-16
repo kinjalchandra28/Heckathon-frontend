@@ -1,4 +1,4 @@
-<div class="px-10 py-6 bg-gray-100">
+<div class="px-10 py-6 bg-gray-100 min-h-full">
 
     <!-- Header Row -->
     <div class="flex justify-between items-center">
@@ -9,7 +9,9 @@
     <!-- Category Chips -->
     <div class="my-5">
         <mat-chip-listbox>
-            <mat-chip-option *ngFor="let c of categories" [selected]="c === 'All'">
+            <mat-chip-option *ngFor="let c of categories"
+                             [selected]="c === selectedCategory"
+                             (click)="onCategoryChange(c)">
                 {{ c }}
             </mat-chip-option>
         </mat-chip-listbox>
@@ -18,8 +20,11 @@
     <!-- Featured Section -->
     <h3 class="mt-6 mb-3 font-semibold">Featured</h3>
 
-    <div class="grid grid-cols-[repeat(auto-fill,minmax(420px,1fr))] gap-6">
-        <app-agent-card *ngFor="let item of featured" [agent]="item"></app-agent-card>
+    <div class="grid grid-cols-2 gap-5">
+        <app-agent-card *ngFor="let item of filteredAgents" [agent]="item" (viewDetails)="openDetail($event)"></app-agent-card>
     </div>
 
 </div>
+
+<!-- Explore Detail Panel -->
+<app-explore-detail [agent]="selectedAgent" [isOpen]="isDetailOpen" (closePanel)="closeDetail()"></app-explore-detail>

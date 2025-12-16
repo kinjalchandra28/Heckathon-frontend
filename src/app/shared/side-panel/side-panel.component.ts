@@ -19,7 +19,7 @@ export class SidePanelComponent {
   navItems: NavItem[] = [
     { label: 'New Chat', icon: 'assets/icons/chat.svg', route: '/chat' },
     { label: 'Explore', icon: 'assets/icons/explore.svg', route: '/explore' },
-    { label: 'Search Chats', icon: 'assets/icons/search.svg' },
+    { label: 'Search Chats', icon: 'assets/icons/search.svg', route: '/search-chats' },
     { label: 'To Action', icon: 'assets/icons/notification.svg' }
   ];
 
