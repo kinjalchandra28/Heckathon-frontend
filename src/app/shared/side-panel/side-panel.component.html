@@ -1,0 +1,61 @@
+<aside class="flex flex-col h-screen w-64 bg-white border-r border-gray-200 p-4">
+    <!-- Logo -->
+    <div class="mb-6">
+        <img src="assets/icons/logo.svg" class="h-10" alt="Logo">
+    </div>
+
+    <!-- Main Nav -->
+    <nav class="space-y-1">
+        @for (item of navItems; track item.label) {
+            <a [routerLink]="item.route"
+               routerLinkActive="bg-gray-100 font-medium"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer">
+                <img [src]="item.icon" class="w-5 h-5" [alt]="item.label">
+                <span>{{ item.label }}</span>
+            </a>
+        }
+    </nav>
+
+    <!-- Agents Section -->
+    <div class="mt-6">
+        <button (click)="agentsExpanded = !agentsExpanded"
+                class="flex items-center gap-1 text-sm font-medium text-gray-900 mb-2">
+            Agents
+            <svg class="w-4 h-4 transition-transform" [class.rotate-180]="!agentsExpanded" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6"/>
+            </svg>
+        </button>
+        @if (agentsExpanded) {
+            <div class="space-y-1 pl-2">
+                @for (agent of agents; track agent) {
+                    <a class="block px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50 rounded cursor-pointer">
+                        {{ agent }}
+                    </a>
+                }
+            </div>
+        }
+    </div>
+
+    <!-- Chats Section -->
+    <div class="mt-6 flex-1 overflow-hidden">
+        <span class="text-sm font-medium text-gray-900">Chats</span>
+        <div class="mt-2 space-y-1 overflow-y-auto max-h-48">
+            @for (chat of chats; track $index) {
+                <a class="block px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50 rounded cursor-pointer truncate">
+                    {{ chat }}
+                </a>
+            }
+        </div>
+        <a class="block mt-2 text-sm text-gray-500 hover:text-gray-700 cursor-pointer">View all chats</a>
+    </div>
+
+    <!-- User Profile -->
+    <div class="mt-auto pt-4 border-t border-gray-200 flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+            <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+            </svg>
+        </div>
+        <span class="text-sm text-gray-700">Frank Jones</span>
+    </div>
+</aside>

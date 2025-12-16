@@ -1,25 +1,24 @@
-<div class="page-container">
+<div class="px-10 py-6 bg-gray-100">
 
     <!-- Header Row -->
-    <div class="header-row">
-        <h2>Explore</h2>
-        <button mat-raised-button colour="primary" class="create-btn">Create</button>
+    <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-semibold">Explore</h2>
+        <button mat-raised-button color="primary">Create</button>
     </div>
 
     <!-- Category Chips -->
-    <div class="category-row">
+    <div class="my-5">
         <mat-chip-listbox>
             <mat-chip-option *ngFor="let c of categories" [selected]="c === 'All'">
                 {{ c }}
             </mat-chip-option>
         </mat-chip-listbox>
-
     </div>
 
     <!-- Featured Section -->
-    <h3 class="section-title">Featured</h3>
+    <h3 class="mt-6 mb-3 font-semibold">Featured</h3>
 
-    <div class="cards-grid">
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(420px,1fr))] gap-6">
         <app-agent-card *ngFor="let item of featured" [agent]="item"></app-agent-card>
     </div>
 

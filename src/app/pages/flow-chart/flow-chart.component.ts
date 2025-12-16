@@ -20,7 +20,6 @@ export class FlowChartComponent {
   CONTROL_HIGH_JSON = {
     // your full JSON pasted here
     program_modules: [
-      // copy the "program_modules" array you shared
     ]
   };
 
