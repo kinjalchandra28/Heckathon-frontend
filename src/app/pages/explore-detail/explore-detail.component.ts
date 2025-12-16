@@ -2,14 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
-
-interface Agent {
-  id: number;
-  title: string;
-  category: string;
-  description: string;
-  image: string;
-}
+import { Agent } from '../../core/models/agent.model';
 
 @Component({
   selector: 'app-explore-detail',

@@ -1,0 +1,192 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+  <div class="w-full max-w-md" @fadeSlide>
+    <!-- Logo -->
+    <div class="text-center mb-8">
+      <img src="assets/icons/logo.svg" class="h-12 mx-auto mb-4" alt="Logo" />
+      <h1 class="text-2xl font-bold text-gray-900">Welcome back</h1>
+      <p class="text-gray-500 mt-2">Sign in to your account to continue</p>
+    </div>
+
+    <!-- Login Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-8" [@shake]="shakeState">
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <!-- Error Alert -->
+        @if (error$ | async; as error) {
+          <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
+            <svg
+              class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <span class="text-sm text-red-700">{{ error }}</span>
+          </div>
+        }
+
+        <!-- Email Field -->
+        <div class="mb-5">
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+          <div class="relative">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              [(ngModel)]="email"
+              (blur)="onEmailBlur()"
+              [class.border-red-300]="emailError"
+              [class.focus:ring-red-500]="emailError"
+              [class.focus:border-red-500]="emailError"
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              placeholder="Enter your email"
+              autocomplete="email"
+            />
+            @if (emailError) {
+              <div class="absolute right-3 top-1/2 -translate-y-1/2">
+                <svg
+                  class="w-5 h-5 text-red-500"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+              </div>
+            }
+          </div>
+          @if (emailError) {
+            <p class="mt-1.5 text-sm text-red-600">{{ emailError }}</p>
+          }
+        </div>
+
+        <!-- Password Field -->
+        <div class="mb-5">
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5"
+            >Password</label
+          >
+          <div class="relative">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              name="password"
+              [(ngModel)]="password"
+              (blur)="onPasswordBlur()"
+              [class.border-red-300]="passwordError"
+              [class.focus:ring-red-500]="passwordError"
+              [class.focus:border-red-500]="passwordError"
+              class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            />
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600"
+            >
+              @if (showPassword) {
+                <svg
+                  class="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                  />
+                  <line x1="1" y1="1" x2="23" y2="23" />
+                </svg>
+              } @else {
+                <svg
+                  class="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              }
+            </button>
+          </div>
+          @if (passwordError) {
+            <p class="mt-1.5 text-sm text-red-600">{{ passwordError }}</p>
+          }
+        </div>
+
+        <!-- Remember Me & Forgot Password -->
+        <div class="flex items-center justify-between mb-6">
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              name="rememberMe"
+              [(ngModel)]="rememberMe"
+              class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+            <span class="ml-2 text-sm text-gray-600">Remember me</span>
+          </label>
+          <a href="#" class="text-sm text-blue-600 hover:text-blue-700">Forgot password?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          [disabled]="(loading$ | async)"
+          class="w-full py-3 px-4 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+        >
+          @if (loading$ | async) {
+            <svg class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none">
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              />
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+            <span>Signing in...</span>
+          } @else {
+            <span>Sign in</span>
+          }
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="my-6 flex items-center">
+        <div class="flex-1 border-t border-gray-200"></div>
+        <span class="px-4 text-sm text-gray-400">or</span>
+        <div class="flex-1 border-t border-gray-200"></div>
+      </div>
+
+      <!-- Register Link -->
+      <p class="text-center text-sm text-gray-600">
+        Don't have an account?
+        <a routerLink="/register" class="text-blue-600 hover:text-blue-700 font-medium"
+          >Create account</a
+        >
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <p class="mt-8 text-center text-sm text-gray-400">
+      By signing in, you agree to our
+      <a href="#" class="text-gray-600 hover:text-gray-700">Terms of Service</a>
+      and
+      <a href="#" class="text-gray-600 hover:text-gray-700">Privacy Policy</a>
+    </p>
+  </div>
+</div>
