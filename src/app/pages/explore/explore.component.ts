@@ -1,9 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { AgentCardComponent } from '../../shared/agent-card/agent-card.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { ExploreDetailComponent } from '../explore-detail/explore-detail.component';
+import { StateContainerComponent } from '../../shared/state-container/state-container.component';
+import { EmptyStateComponent } from '../../shared/empty-state/empty-state.component';
 import { AlarmApiService } from '../../core/services/alarm-api.service';
 import { AlarmFlowsByDisciplineDTO } from '../../core/services/api-types';
 import { Agent } from '../../core/models/agent.model';
@@ -19,10 +21,13 @@ import { Agent } from '../../core/models/agent.model';
     AgentCardComponent,
     MatButtonModule,
     ExploreDetailComponent,
+    StateContainerComponent,
+    EmptyStateComponent,
   ],
 })
 export class ExploreComponent implements OnInit {
   private alarmApi = inject(AlarmApiService);
+  private cdr = inject(ChangeDetectorRef);
 
   categories: string[] = ['All'];
   selectedCategory = 'All';
@@ -48,11 +53,13 @@ export class ExploreComponent implements OnInit {
         console.log('Alarm flows received:', alarmFlows);
         this.processAlarmFlows(alarmFlows);
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error loading alarm flows:', err);
         this.error = err.message || 'Failed to load alarm flows';
         this.loading = false;
+        this.cdr.detectChanges();
       },
     });
   }

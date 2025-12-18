@@ -1,0 +1,141 @@
+{
+  "device": {
+    "id": "H00076803C251",
+    "name": "LT1 S005 WHGC",
+    "store_number": 2538,
+    "store_name": "FELTHAMDUKESGREEN",
+    "case_class": "LT",
+    "pack_class": "LT",
+    "pack_name": "LT01"
+  },
+  "metrics": [
+    {
+      "id": "residual_drift",
+      "name": "Residual Drift",
+      "metric": {
+        "type": "slope",
+        "value": 0.00,
+        "unit": "slope"
+      },
+      "status": "Critical",
+      "history": 201,
+      "description": "Measures systematic drift in temperature residuals over time"
+    },
+    {
+      "id": "variance_ratio",
+      "name": "Variance Ratio",
+      "metric": {
+        "type": "slope",
+        "value": 0.00,
+        "unit": "slope"
+      },
+      "status": "Critical",
+      "history": 201,
+      "description": "Ratio of observed variance to expected variance in temperature readings"
+    },
+    {
+      "id": "residual_whiteness",
+      "name": "Residual Whiteness",
+      "metric": {
+        "type": "slope",
+        "value": 0.00,
+        "unit": "slope"
+      },
+      "status": "Okay",
+      "history": null,
+      "description": "Tests if residuals are white noise (no autocorrelation)"
+    },
+    {
+      "id": "residual_flatline",
+      "name": "Residual Flatline",
+      "metric": {
+        "type": "slope",
+        "value": 0.00,
+        "unit": "slope"
+      },
+      "status": "Okay",
+      "history": null,
+      "description": "Detects periods where temperature readings are unchanging"
+    },
+    {
+      "id": "defrost_apex",
+      "name": "Defrost Apex",
+      "metric": {
+        "type": "slope",
+        "value": 0.00,
+        "unit": "slope"
+      },
+      "status": "Okay",
+      "history": null,
+      "description": "Peak temperature reached during defrost cycles"
+    },
+    {
+      "id": "post_defrost_recovery",
+      "name": "Post Defrost Recovery",
+      "metric": {
+        "type": "slope",
+        "value": 0.00,
+        "unit": "slope"
+      },
+      "status": "Okay",
+      "history": null,
+      "description": "Time and rate of temperature recovery after defrost"
+    },
+    {
+      "id": "defrost_internal_error",
+      "name": "Defrost Internal Error",
+      "metric": {
+        "type": "slope",
+        "value": 0.00,
+        "unit": "slope"
+      },
+      "status": "Okay",
+      "history": null,
+      "description": "Internal errors detected during defrost cycle execution"
+    },
+    {
+      "id": "defrost_duration_overrun",
+      "name": "Defrost Duration Overrun",
+      "metric": {
+        "type": "slope",
+        "value": 0.00,
+        "unit": "slope"
+      },
+      "status": "Okay",
+      "history": null,
+      "description": "Cases where defrost duration exceeded expected time"
+    },
+    {
+      "id": "post_defrost_slope",
+      "name": "Post Defrost Slope",
+      "metric": {
+        "type": "slope",
+        "value": 0.00,
+        "unit": "slope"
+      },
+      "status": "Okay",
+      "history": null,
+      "description": "Rate of temperature change after defrost completes"
+    },
+    {
+      "id": "door_open_stats",
+      "name": "Door Open Stats",
+      "metric": {
+        "type": "slope",
+        "value": 0.00,
+        "unit": "slope"
+      },
+      "status": "Okay",
+      "history": null,
+      "description": "Statistics on door open events and duration"
+    }
+  ],
+  "metadata": {
+    "generated_at": "2025-09-08T07:56:04",
+    "data_range": {
+      "from": "2025-08-11T07:56:00",
+      "to": "2025-09-08T07:56:04"
+    },
+    "total_datapoints": 35662
+  }
+}
