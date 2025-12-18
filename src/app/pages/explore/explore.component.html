@@ -69,8 +69,10 @@
 </div>
 
 <!-- Explore Detail Panel -->
-<app-explore-detail
-  [agent]="selectedAgent"
-  [isOpen]="isDetailOpen"
-  (closePanel)="closeDetail()"
-></app-explore-detail>
+ @if(selectedAgent){
+   <app-explore-detail
+     [agent]="selectedAgent"
+     [isOpen]="isDetailOpen"
+     (closePanel)="closeDetail()"
+   ></app-explore-detail>
+ }
