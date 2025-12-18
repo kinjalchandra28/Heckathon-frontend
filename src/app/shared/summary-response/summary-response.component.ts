@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SummaryData } from './summary.interface';
+import { MarkdownDirective } from './markdown-html.directive';
 
 @Component({
   selector: 'app-summary-response',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MarkdownDirective],
   templateUrl: './summary-response.component.html',
   styleUrls: ['./summary-response.component.css']
 })
