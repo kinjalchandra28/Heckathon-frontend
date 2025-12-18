@@ -1,8 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Agent } from '../../core/models/agent.model';
+import { AgentService } from '../flow-chart-editor/agent.service';
 
 @Component({
   selector: 'app-explore-detail',
@@ -31,12 +32,20 @@ import { Agent } from '../../core/models/agent.model';
     ])
   ]
 })
-export class ExploreDetailComponent {
+export class ExploreDetailComponent implements OnInit {
   @Input() agent: Agent | null = null;
   @Input() isOpen = false;
   @Output() closePanel = new EventEmitter<void>();
+  private agentService = inject(AgentService);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+
+  }
+  ngOnInit(): void {
+    if (this.agent) {
+      this.agentService.setAgent(this.agent);
+    }
+  }
 
   thingsToTry = [
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis est enim, facilisis at ultricies quis, iaculis in lorem.',
@@ -57,6 +66,7 @@ export class ExploreDetailComponent {
 
   goToFlowChart(): void {
     if (this.agent) {
+      this.agentService.setAgent(this.agent);
       this.close();
       this.router.navigate(['/flow-chart', this.agent.id]);
     }

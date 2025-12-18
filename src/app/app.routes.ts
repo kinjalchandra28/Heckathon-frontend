@@ -21,19 +21,7 @@ export const routes: Routes = [
     path: 'explore',
     component: ExploreComponent,
     canActivate: [authGuard],
-    // children: [
-    //   {
-    //     path: 'flow-chart',
-    //     component: DiagramViewerComponent,
-    //     // canActivate: [authGuard],
-    //   },
-    // ],
   },
-  // {
-  //   path: 'flow-chart',
-  //   component: FlowChartEditorContainer,
-  //   // canActivate: [authGuard],
-  // },
   {
     path: 'chat',
     component: ChatComponent,

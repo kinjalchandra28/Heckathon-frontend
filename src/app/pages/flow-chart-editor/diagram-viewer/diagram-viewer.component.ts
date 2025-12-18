@@ -1,7 +1,6 @@
 
-import { Component, ChangeDetectionStrategy, input, computed, signal, effect } from '@angular/core';
+import { Component, input, computed, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { DiagramNodeComponent } from '../diagram-node/diagram-node.component';
 import { Connection, ProgramModule } from '../models/program-module.model';
 import { WorkflowEditorNodeComponent } from '../workflow-editor-node/workflow-editor-node.component';
 import { WorkflowNode } from '../models/workflow.model';
@@ -15,7 +14,6 @@ import { WorkflowNode } from '../models/workflow.model';
   templateUrl: './diagram-viewer.component.html',
   styleUrl:
     './diagram-viewer.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DiagramViewerComponent {
   modules = input.required<ProgramModule[]>();
@@ -117,19 +115,19 @@ export class DiagramViewerComponent {
   }
 
 
-   programModuleExample: ProgramModule = {
-          "type": 0,
-          "x": 73.015625,
-          "y": 420.4375,
-          "name": "$500d7a5a",
-          "inputs": [
-              "calculated_product_temperature"
-          ],
-          "parameters": [
-              ""
-          ]
-      };
+  //  programModuleExample: ProgramModule = {
+  //         "type": 0,
+  //         "x": 73.015625,
+  //         "y": 420.4375,
+  //         "name": "$500d7a5a",
+  //         "inputs": [
+  //             "calculated_product_temperature"
+  //         ],
+  //         "parameters": [
+  //             ""
+  //         ]
+  //     };
   
-     workflowNodeExample: WorkflowNode = { id: 'tpl-trigger', type: 'trigger', label: 'Alarm Trigger' , position: { x: 100, y: 100 } };
+  //    workflowNodeExample: WorkflowNode = { id: 'tpl-trigger', type: 'trigger', label: 'Alarm Trigger' , position: { x: 100, y: 100 } };
   
 }
