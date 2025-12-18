@@ -1,23 +1,20 @@
 <div class="container">
     <div class="flow-diagram">
 
-        <app-diagram-viewer
-        [modules]="modules">
-    
+        <app-diagram-viewer [modules]="modules" (deletedModule)="onDeletedModule($event)"
+            (selectedModule)="onSelectedModule($event)">
+            <!-- (removeNodeAction)="onDeleteNode($event)" -->
+
         </app-diagram-viewer>
     </div>
 
+    @if(isConfigPanelOpen() && selectedModule( )) {
     <div class="properties-panel">
-
-        <app-property-config-panel
-        [node]="selectedNode()"
-        
-              (labelChange)="onLabelChange($event)"
-              (descriptionChange)="onDescriptionChange($event)"
-              (parameterChange)="onParameterChange($event)"
-              (positionChange)="onPositionChange($event)"
-              (deleteNode)="onDeleteNode($event)"
-              (closePanel)="onClosePanel()">
+        <app-property-config-panel [node]="selectedNode()" [module]="selectedModule()"
+            (labelChange)="onLabelChange($event)" (descriptionChange)="onDescriptionChange($event)"
+            (parameterChange)="onParameterChange($event)" (positionChange)="onPositionChange($event)"
+            (deleteNode)="onDeleteNode($event)" (closePanel)="onClosePanel()">
         </app-property-config-panel>
     </div>
+    }
 </div>

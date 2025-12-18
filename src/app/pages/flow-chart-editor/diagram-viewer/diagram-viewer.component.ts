@@ -1,5 +1,5 @@
 
-import { Component, input, computed, signal, effect } from '@angular/core';
+import { Component, input, computed, signal, effect, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Connection, ProgramModule } from '../models/program-module.model';
 import { WorkflowEditorNodeComponent } from '../workflow-editor-node/workflow-editor-node.component';
@@ -17,7 +17,8 @@ import { WorkflowNode } from '../models/workflow.model';
 })
 export class DiagramViewerComponent {
   modules = input.required<ProgramModule[]>();
-  
+  deletedModule = output<string>();
+
   // Local state for modules to allow for mutation (dragging)
   localModules = signal<ProgramModule[]>([]);
 
@@ -28,6 +29,8 @@ export class DiagramViewerComponent {
     startMouseX: number;
     startMouseY: number;
   } | null>(null);
+
+  selectedModule = output<ProgramModule>();
 
   private readonly MODULE_WIDTH = 200;
   private readonly MODULE_HEIGHT = 110;
@@ -114,20 +117,12 @@ export class DiagramViewerComponent {
     this.draggedModuleInfo.set(null);
   }
 
-
-  //  programModuleExample: ProgramModule = {
-  //         "type": 0,
-  //         "x": 73.015625,
-  //         "y": 420.4375,
-  //         "name": "$500d7a5a",
-  //         "inputs": [
-  //             "calculated_product_temperature"
-  //         ],
-  //         "parameters": [
-  //             ""
-  //         ]
-  //     };
+  onDeleteModule(name: string) {
+    this.deletedModule.emit(name);
+    this.localModules.update(modules => modules.filter(m => m.name !== name));
+  }
   
-  //    workflowNodeExample: WorkflowNode = { id: 'tpl-trigger', type: 'trigger', label: 'Alarm Trigger' , position: { x: 100, y: 100 } };
-  
+  onSelectModule(m: ProgramModule){
+    this.selectedModule.emit(m);
+  }
 }

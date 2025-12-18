@@ -70,12 +70,14 @@
       [isDragged]="draggedModuleInfo()?.module.name === module.name"
       (dragStart)="onDragStart($event.event, $event.module)">
     </app-diagram-node> -->
+    <!-- [node]="workflowNodeExample" -->
 
     <app-workflow-editor-node
-  [module]="module"
+      [module]="module" 
       [isDragged]="draggedModuleInfo()?.module?.name === module.name"
-      (dragStart)="onDragStart($event.event, $event.module)">
-  [node]="workflowNodeExample"
+      (dragStart)="onDragStart($event.event, $event.module)"
+      (removeNodeAction)="onDeleteModule($event)"
+      (click)="onSelectModule(module)"
   ></app-workflow-editor-node>
   }
   

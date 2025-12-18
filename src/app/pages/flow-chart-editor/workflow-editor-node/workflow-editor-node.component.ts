@@ -45,6 +45,7 @@ export class WorkflowEditorNodeComponent {
   module = input.required<ProgramModule>();
   isDragged = input(false);
   dragStart = output<{ event: MouseEvent; module: ProgramModule }>();
+  removeNodeAction = output<string>();
 
   hostClasses = computed(() => {
     const baseClasses = 'absolute flex flex-col p-3 rounded-lg shadow-lg text-white border-2 transition-transform duration-200 cursor-grab';
@@ -54,7 +55,7 @@ export class WorkflowEditorNodeComponent {
   });
 
   removeNode(id: string) {
-    // Implementation for removing a node
+    this.removeNodeAction.emit(id);
   }
   onMouseDown(event: MouseEvent) {
     this.dragStart.emit({ event, module: this.module() });
