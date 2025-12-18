@@ -5,6 +5,7 @@ import { FlowChartComponent } from './pages/flow-chart/flow-chart.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { ChatHistoryComponent } from './pages/chat-history/chat-history.component';
 import { LoginComponent } from './pages/login/login.component';
+import { FlowChartEditorContainer } from './pages/flow-chart-editor/flow-chart-editor-container/flow-chart-editor-container';
 
 export const routes: Routes = [
   // Public routes
@@ -20,6 +21,18 @@ export const routes: Routes = [
     path: 'explore',
     component: ExploreComponent,
     canActivate: [authGuard],
+    // children: [
+    //   {
+    //     path: 'flow-chart',
+    //     component: DiagramViewerComponent,
+    //     // canActivate: [authGuard],
+    //   },
+    // ],
+  },
+  {
+    path: 'flow-chart',
+    component: FlowChartEditorContainer,
+    // canActivate: [authGuard],
   },
   {
     path: 'chat',

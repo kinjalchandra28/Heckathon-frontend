@@ -1,0 +1,82 @@
+<!-- 
+<div 
+  class="relative w-[800px] h-[600px] bg-gray-500 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700 shadow-2xl shadow-sky-900/20">
+  <svg class="absolute top-0 left-0 w-full h-full pointer-events-none">
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto" markerUnits="strokeWidth">
+        <polygon points="0 0, 10 3.5, 0 7" class="fill-sky-400" />
+      </marker>
+    </defs>
+    @for (connection of connections(); track connection.id) {
+      <path 
+        [attr.d]="connection.path" 
+        class="stroke-sky-400/80 fill-none" 
+        stroke-width="2" 
+        marker-end="url(#arrowhead)">
+      </path>
+    }
+  </svg>
+
+  @for (module of modules(); track module.name) {
+    <div 
+      class="absolute flex flex-col p-3 rounded-lg shadow-lg text-white border-2 transition-all duration-300 hover:scale-105 hover:shadow-sky-500/50"
+      [class]="getNodeColor(module.type)"
+      [style.left.px]="module.x" 
+      [style.top.px]="module.y"
+      style="width: 200px; height: 110px; cursor: pointer;">
+      
+      <div class="flex-grow">
+        <h3 class="font-bold text-sm truncate text-sky-300">{{ module.name }}</h3>
+        <p class="text-xs text-gray-400 mt-1">Type: {{ module.type }}</p>
+        
+        @if (module.parameters && module.parameters[0]) {
+          <p class="text-xs text-gray-400 truncate">Parameter: {{ module.parameters[0] }}</p>
+        }
+      </div>
+
+      <div class="text-xs mt-2 border-t border-gray-600 pt-2 text-gray-500 truncate">
+        Inputs: {{ module.inputs.join(', ') || 'None' }}
+      </div>
+    </div>
+  }
+</div> -->
+
+<!-- <div class="relative w-[800px] h-[600px] bg-gray-500 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700 shadow-2xl shadow-sky-900/20" -->
+<div class="canvas"
+  [class.cursor-grabbing]="draggedModuleInfo()"
+  (mousemove)="onDrag($event)"
+  (mouseup)="onDragEnd()"
+  (mouseleave)="onDragEnd()">
+  
+  <svg class="connection-layer">
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto" markerUnits="strokeWidth">
+        <polygon points="0 0, 10 3.5, 0 7" class="connection-path-marker" />
+      </marker>
+    </defs>
+    @for (connection of connections(); track connection.id) {
+      <path 
+        [attr.d]="connection.path" 
+        class="connection-path" 
+        stroke-width="2" 
+        marker-end="url(#arrowhead)">
+      </path>
+    }
+  </svg>
+
+  @for (module of localModules(); track module.name) {
+    <!-- <app-diagram-node
+      [module]="module"
+      [isDragged]="draggedModuleInfo()?.module.name === module.name"
+      (dragStart)="onDragStart($event.event, $event.module)">
+    </app-diagram-node> -->
+
+    <app-workflow-editor-node
+  [module]="module"
+      [isDragged]="draggedModuleInfo()?.module?.name === module.name"
+      (dragStart)="onDragStart($event.event, $event.module)">
+  [node]="workflowNodeExample"
+  ></app-workflow-editor-node>
+  }
+  
+</div>
