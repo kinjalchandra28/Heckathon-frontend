@@ -6,15 +6,21 @@
             <!-- (removeNodeAction)="onDeleteNode($event)" -->
 
         </app-diagram-viewer>
+        {{selectedModule() && isConfigPanelOpen}}
     </div>
-
+    <!-- @if(true) { -->
     @if(isConfigPanelOpen() && selectedModule( )) {
-    <div class="properties-panel">
-        <app-property-config-panel [node]="selectedNode()" [module]="selectedModule()"
-            (labelChange)="onLabelChange($event)" (descriptionChange)="onDescriptionChange($event)"
-            (parameterChange)="onParameterChange($event)" (positionChange)="onPositionChange($event)"
-            (deleteNode)="onDeleteNode($event)" (closePanel)="onClosePanel()">
-        </app-property-config-panel>
-    </div>
+        <div class="properties-panel">
+            <app-property-config-panel 
+                [module]="selectedModule()"
+                [agent]="agent()"
+                (labelChange)="onLabelChange($event)" 
+                (descriptionChange)="onDescriptionChange($event)"
+                (parameterChange)="onParameterChange($event)" 
+                (positionChange)="onPositionChange($event)"
+                (deleteNode)="onDeleteNode($event)" 
+                (closePanel)="onClosePanel()">
+            </app-property-config-panel>
+        </div>
     }
 </div>

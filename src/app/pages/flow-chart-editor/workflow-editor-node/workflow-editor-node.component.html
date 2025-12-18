@@ -16,7 +16,7 @@
 
   <div class="node-header" cdkDragHandle>
     <span class="node-icon">{{ getIcon('trigger') }}</span>
-    <span class="node-label">{{ module().name }}</span>
+    <span class="node-label">{{ module().name | slice: 0:16 }}</span>
     <button class="delete-btn" (click)="removeNode(module().name)">×</button>
   </div>
 

@@ -1,9 +1,10 @@
 
 import { Component, input, computed, signal, effect, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Connection, ProgramModule } from '../models/program-module.model';
+import { Connection } from '../models/program-module.model';
+import {  ProgramModule } from '../../../core/services/api-types';
 import { WorkflowEditorNodeComponent } from '../workflow-editor-node/workflow-editor-node.component';
-import { WorkflowNode } from '../models/workflow.model';
+// import { WorkflowNode } from '../models/workflow.model';
 
 
 
