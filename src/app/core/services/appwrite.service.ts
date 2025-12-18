@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Client, Account, Databases, Functions, ID, Query, Models } from 'appwrite';
-import { from, Observable, throwError } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Client, Account, Databases, Functions, ID, Query, Models, RealtimeResponseEvent } from 'appwrite';
+import { from, Observable, throwError, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import {
@@ -11,11 +11,12 @@ import {
 } from '../models/appwrite.model';
 
 @Injectable({ providedIn: 'root' })
-export class AppwriteService {
+export class AppwriteService implements OnDestroy {
   private client: Client;
   private account: Account;
   private databases: Databases;
   private functions: Functions;
+  private activeSubscriptions: Map<string, () => void> = new Map();
 
   constructor() {
     this.client = new Client()
@@ -25,6 +26,106 @@ export class AppwriteService {
     this.account = new Account(this.client);
     this.databases = new Databases(this.client);
     this.functions = new Functions(this.client);
+  }
+
+  ngOnDestroy(): void {
+    // Clean up all subscriptions
+    this.activeSubscriptions.forEach((unsubscribe) => unsubscribe());
+    this.activeSubscriptions.clear();
+  }
+
+  // ============ Realtime Methods ============
+
+  /**
+   * Subscribe to a specific document for real-time updates
+   * @param collectionId - Collection ID
+   * @param documentId - Document ID to subscribe to
+   * @param databaseId - Database ID (defaults to environment config)
+   * @returns Observable that emits when document is updated
+   */
+  subscribeToDocument<T>(
+    collectionId: string,
+    documentId: string,
+    databaseId: string = environment.appwrite.databaseId
+  ): Observable<T> {
+    const subject = new Subject<T>();
+    const channel = `databases.${databaseId}.collections.${collectionId}.documents.${documentId}`;
+
+    console.log('AppwriteService: Subscribing to channel:', channel);
+
+    const unsubscribe = this.client.subscribe(channel, (response: RealtimeResponseEvent<T>) => {
+      console.log('AppwriteService: Realtime event received:', response);
+      if (response.events.some(e => e.includes('.update') || e.includes('.create'))) {
+        subject.next(response.payload);
+      }
+    });
+
+    // Store subscription for cleanup
+    this.activeSubscriptions.set(channel, unsubscribe);
+
+    return subject.asObservable();
+  }
+
+  /**
+   * Subscribe to all documents in a collection
+   * @param collectionId - Collection ID
+   * @param databaseId - Database ID (defaults to environment config)
+   * @returns Observable that emits when any document in collection changes
+   */
+  subscribeToCollection<T>(
+    collectionId: string,
+    databaseId: string = environment.appwrite.databaseId
+  ): Observable<{ event: string; payload: T }> {
+    const subject = new Subject<{ event: string; payload: T }>();
+    const channel = `databases.${databaseId}.collections.${collectionId}.documents`;
+
+    console.log('AppwriteService: Subscribing to collection channel:', channel);
+
+    const unsubscribe = this.client.subscribe(channel, (response: RealtimeResponseEvent<T>) => {
+      console.log('AppwriteService: Collection event received:', response);
+      const eventType = response.events[0]?.split('.').pop() || 'unknown';
+      subject.next({ event: eventType, payload: response.payload });
+    });
+
+    // Store subscription for cleanup
+    this.activeSubscriptions.set(channel, unsubscribe);
+
+    return subject.asObservable();
+  }
+
+  /**
+   * Unsubscribe from a specific channel
+   * @param channel - Channel to unsubscribe from
+   */
+  unsubscribe(channel: string): void {
+    const unsubscribe = this.activeSubscriptions.get(channel);
+    if (unsubscribe) {
+      console.log('AppwriteService: Unsubscribing from channel:', channel);
+      unsubscribe();
+      this.activeSubscriptions.delete(channel);
+    }
+  }
+
+  /**
+   * Unsubscribe from a document subscription
+   * @param collectionId - Collection ID
+   * @param documentId - Document ID
+   * @param databaseId - Database ID
+   */
+  unsubscribeFromDocument(
+    collectionId: string,
+    documentId: string,
+    databaseId: string = environment.appwrite.databaseId
+  ): void {
+    const channel = `databases.${databaseId}.collections.${collectionId}.documents.${documentId}`;
+    this.unsubscribe(channel);
+  }
+
+  /**
+   * Get the Appwrite client for direct access if needed
+   */
+  getClient(): Client {
+    return this.client;
   }
 
   // ============ Account Methods ============
