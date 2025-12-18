@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter, inject, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, OnInit, signal, input, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Agent } from '../../core/models/agent.model';
 import { AgentService } from '../flow-chart-editor/agent.service';
+import { single } from 'rxjs';
 
 @Component({
   selector: 'app-explore-detail',
@@ -33,18 +34,33 @@ import { AgentService } from '../flow-chart-editor/agent.service';
   ]
 })
 export class ExploreDetailComponent implements OnInit {
-  @Input() agent: Agent | null = null;
+  // @Input() agent: Agent | null = null;
+  agent = input.required<Agent>();
   @Input() isOpen = false;
   @Output() closePanel = new EventEmitter<void>();
   private agentService = inject(AgentService);
+  hasNotProgrammeModules = signal(true);
 
   constructor(private router: Router) {
-
+    effect(() => {
+      console.log('agent changed:', this.agent());
+      this.agentService.setAgent(this.agent());
+      if (this.agent() && this.agent().alarmPattern) {
+        const alarmPattern = this.agent().alarmPattern;
+        console.log('alarmPattern:', alarmPattern);
+        alarmPattern?.programModules && alarmPattern.programModules.length > 0 ? this.hasNotProgrammeModules.set(false) : this.hasNotProgrammeModules.set(true);
+        console.log('hasNotProgrammeModules', this.hasNotProgrammeModules());
+      }
+    });
   }
   ngOnInit(): void {
-    if (this.agent) {
-      this.agentService.setAgent(this.agent);
-    }
+    
+    // if (this.agent()) {
+      
+    //   console.log('agent', this.agent());
+    //   this.agent().alarmPattern && this.agent().alarmPattern?.programModules && this.agent().alarmPattern?.programModules?.length > 0 ? this.hasNotProgrammeModules.set(false) : this.hasNotProgrammeModules.set(false);
+    //   console.log('hasNotProgrammeModules', this.hasNotProgrammeModules());
+    // }
   }
 
   thingsToTry = [
@@ -66,9 +82,9 @@ export class ExploreDetailComponent implements OnInit {
 
   goToFlowChart(): void {
     if (this.agent) {
-      this.agentService.setAgent(this.agent);
+      // this.agentService.setAgent(this.agent());
       this.close();
-      this.router.navigate(['/flow-chart', this.agent.id]);
+      this.router.navigate(['/flow-chart', this.agent().id]);
     }
   }
 }

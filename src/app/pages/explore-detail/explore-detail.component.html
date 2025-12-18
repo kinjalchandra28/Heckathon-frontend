@@ -1,4 +1,4 @@
-@if (isOpen && agent) {
+@if (isOpen && agent()) {
     <!-- Backdrop -->
     <div class="fixed inset-0 bg-black/30 z-40" @fadeIn (click)="close()"></div>
 
@@ -14,11 +14,11 @@
         <div class="p-6 pt-12">
             <!-- Header -->
             <div class="flex gap-6 mb-8">
-                <img [src]="agent.image" [alt]="agent.title" class="w-28 h-28 rounded-xl object-cover bg-blue-100 p-4 flex-shrink-0">
+                <img [src]="agent().image" [alt]="agent().title" class="w-28 h-28 rounded-xl object-cover bg-blue-100 p-4 flex-shrink-0">
                 <div class="flex flex-col justify-center">
-                    <h1 class="text-xl font-bold text-gray-900 mb-1">{{ agent.title }}</h1>
-                    <span class="text-blue-600 text-sm mb-3">{{ agent.category }}</span>
-                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">{{ agent.description }}</p>
+                    <h1 class="text-xl font-bold text-gray-900 mb-1">{{ agent().title }}</h1>
+                    <span class="text-blue-600 text-sm mb-3">{{ agent().category }}</span>
+                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">{{ agent().description }}</p>
                     <div class="flex items-center gap-3">
                         <button class="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-full hover:bg-gray-800">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -26,7 +26,9 @@
                             </svg>
                             <span class="text-sm font-medium">Add</span>
                         </button>
-                        <button (click)="goToFlowChart()" class="p-2.5 hover:bg-gray-100 rounded-full border border-gray-200">
+                        <button 
+                        [disabled]="hasNotProgrammeModules()"
+                        (click)="goToFlowChart()" class="p-2.5 hover:bg-gray-100 rounded-full border border-gray-200 disabled:bg-gray-300">
                             <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                 <circle cx="12" cy="12" r="3"/>
                                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
@@ -44,7 +46,7 @@
                     iaculis in lorem. Donec vel egestas nisl, vitae tempus libero. Ut elementum justo pretium pretium
                     posuere. Aliquam nisl nibh, mattis eu ex in, eleifend lobortis lorem. Curabitur mollis elit nec mi
                     ullamcorper, sit amet fermentum metus finibus. Etiam auctor blandit justo, eu maximus augue. Donec
-                    non nisl luctus, tempus justo in, laoreet ipsum.
+                    non nisl luctus, tempus justo in, laoreet ipsum. 
                 </p>
             </div>
 
