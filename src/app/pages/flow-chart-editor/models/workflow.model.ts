@@ -4,4 +4,6 @@ export interface WorkflowNode {
   label: string;
   position: { x: number; y: number };
   config?: Record<string, any>;
+  parameters?: any;
+  description?: string;
 }

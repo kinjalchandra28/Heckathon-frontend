@@ -1,7 +1,20 @@
 :host {
     .container {
-        display: block;
+        display: flex;
+        flex-direction: row;
+        /* display: block; */
         height: 100%;
         width: 100%;
+
+        & .flow-diagram {
+            flex: 1;
+            height: 100%;
+        }
+
+        & .properties-panel {
+            height: 100%;
+            border-left: 1px solid #e0e0e0;
+        }
     }
+
 }
