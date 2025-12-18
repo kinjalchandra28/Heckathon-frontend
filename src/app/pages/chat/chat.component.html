@@ -2,9 +2,33 @@
     <!-- Background -->
     <img src="assets/icons/chat-bg.svg" class="absolute inset-0 w-full h-full object-cover pointer-events-none" alt="">
 
+    <!-- Chat Title Header -->
+    @if (chatTitle && !chatLoading) {
+        <div class="relative z-10 px-6 pt-6 pb-2">
+            <h1 class="text-2xl font-semibold text-gray-900">Analysis: {{ chatTitle }}</h1>
+            @if (formattedChatDate) {
+                <p class="text-sm text-gray-500 mt-1">{{ formattedChatDate }}</p>
+            }
+        </div>
+    }
+
+    <!-- Loading Chat -->
+    @if (chatLoading) {
+        <div class="relative z-10 flex-1 flex items-center justify-center">
+            <div class="flex items-center gap-2">
+                <div class="flex gap-1">
+                    <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+                    <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+                    <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+                </div>
+                <span class="text-sm text-gray-500">Loading chat...</span>
+            </div>
+        </div>
+    }
+
     <!-- Chat Messages -->
-    @if (messages.length) {
-        <div class="relative z-10 flex-1 overflow-y-auto p-6 space-y-4">
+    @if (!chatLoading && messages.length) {
+        <div class="relative z-10 flex-1 overflow-y-auto p-6 space-y-4" [class.pt-2]="chatTitle">
             @for (msg of messages; track $index) {
                 <div class="flex" [class.justify-end]="msg.sender === 'user'">
                     <!-- User Message -->
@@ -24,14 +48,33 @@
 
                     <!-- Agent Message -->
                     @if (msg.sender === 'agent') {
-                        <div [class]="(msg.graphData || msg.metricsData) ? 'w-full max-w-[95%]' : 'max-w-[85%]'">
+                        <div [class]="(msg.graphData || msg.metricsData || msg.graphUrl || msg.summaryData) ? 'w-full max-w-[95%]' : 'max-w-[85%]'">
+                            <!-- Display summary data (recommendations + summary) -->
                             @if (msg.summaryData) {
                                 <app-summary-response [data]="msg.summaryData"></app-summary-response>
-                            } @else if (msg.graphData) {
+                            }
+
+                            <!-- Display graph from API URL -->
+                            @if (msg.graphUrl) {
+                                <div class="mt-4 p-4 bg-white rounded-2xl shadow-sm">
+                                    <img [src]="msg.graphUrl" alt="Analysis Graph" class="w-full rounded-lg">
+                                </div>
+                            }
+
+                            <!-- Display graph from local data (fallback) -->
+                            @if (msg.graphData && !msg.graphUrl) {
                                 <app-temperature-chart [data]="msg.graphData"></app-temperature-chart>
-                            } @else if (msg.metricsData) {
-                                <app-metrics-table [data]="msg.metricsData"></app-metrics-table>
-                            } @else if (msg.text) {
+                            }
+
+                            <!-- Display metrics/datapoints table -->
+                            @if (msg.metricsData) {
+                                <div class="mt-4">
+                                    <app-metrics-table [data]="msg.metricsData"></app-metrics-table>
+                                </div>
+                            }
+
+                            <!-- Display plain text if no structured data -->
+                            @if (msg.text && !msg.summaryData && !msg.graphData && !msg.metricsData && !msg.graphUrl) {
                                 <div class="px-4 py-3 rounded-2xl bg-white shadow-sm text-gray-800">
                                     <p class="m-0">{{ msg.text }}</p>
                                 </div>
@@ -60,8 +103,8 @@
     }
 
     <!-- Content -->
-    <div class="relative z-10 flex flex-col items-center w-full px-4 py-8" [class.flex-1]="!messages.length" [class.justify-center]="!messages.length">
-        @if (!messages.length) {
+    <div class="relative z-10 flex flex-col items-center w-full px-4 py-8" [class.flex-1]="!messages.length && !chatLoading" [class.justify-center]="!messages.length && !chatLoading">
+        @if (!messages.length && !chatLoading) {
             <h1 class="text-2xl font-semibold text-gray-800 mb-8">What would you like to do?</h1>
         }
 
@@ -88,20 +131,28 @@
 
             <!-- Actions -->
             <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <button (click)="triggerFileUpload()" class="p-2 hover:bg-gray-100 rounded-lg">
-                        <img src="assets/icons/plus.svg" class="w-7 h-7" alt="Add file">
+                <div class="flex items-center gap-2">
+                    <!-- Plus Button -->
+                    <button (click)="triggerFileUpload()"
+                            class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
+                        <svg class="w-4 h-4 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
                     </button>
-                    <button class="p-2 hover:bg-gray-100 rounded-lg">
-                        <img src="assets/icons/menu.svg" class="w-7 h-7" alt="Menu">
-                    </button>
+                    <!-- Menu Button -->
+                    <!-- <button class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
+                        <svg class="w-4 h-4 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button> -->
                 </div>
                 <!-- Send Button -->
                 <button (click)="sendMessage()" [disabled]="!canSend"
-                        class="p-2 rounded-full transition-all border"
-                        [class]="canSend ? 'bg-black border-black hover:bg-gray-800' : 'bg-white border-gray-300 cursor-not-allowed'">
-                    <img src="assets/icons/send.svg" class="w-6 h-6 transition-all"
-                         [class]="canSend ? 'brightness-0 invert' : 'opacity-40'" alt="Send">
+                        class="w-9 h-9 flex items-center justify-center rounded-full border transition-all"
+                        [class]="canSend ? 'bg-gray-100 border-gray-200 hover:bg-gray-200' : 'bg-white border-gray-200 cursor-not-allowed'">
+                    <svg class="w-4 h-4 transition-all" [class]="canSend ? 'text-gray-600' : 'text-gray-300'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
                 </button>
             </div>
 
