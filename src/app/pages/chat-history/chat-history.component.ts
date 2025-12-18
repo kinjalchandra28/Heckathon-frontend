@@ -95,6 +95,6 @@ export class ChatHistoryComponent implements OnInit {
   }
 
   getChatDisplayName(chat: Chat): string {
-    return chat.chatId || chat.title || 'Untitled Chat';
+    return chat .chatId || chat.title || 'Untitled Chat';
   }
 }
