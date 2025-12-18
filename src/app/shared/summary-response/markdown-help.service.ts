@@ -13,12 +13,12 @@ export class MarkdownHelperService {
             .replace(/>/g, '&gt;')
 
             // Headers (h1-h6)
-            .replace(/^######\s+(.*)$/gm, '<h6>$1</h6>')
-            .replace(/^#####\s+(.*)$/gm, '<h5>$1</h5>')
-            .replace(/^####\s+(.*)$/gm, '<h4>$1</h4>')
-            .replace(/^###\s+(.*)$/gm, '<h3>$1</h3>')
-            .replace(/^##\s+(.*)$/gm, '<h2>$1</h2>')
-            .replace(/^#\s+(.*)$/gm, '<h1>$1</h1>')
+            .replace(/^######\s+(.*)$/gm, '<h6 style="font-weight:bold">$1</h6>')
+            .replace(/^#####\s+(.*)$/gm, '<h5 style="font-weight:bold">$1</h5>')
+            .replace(/^####\s+(.*)$/gm, '<h4 style="font-weight:bold">$1</h4>')
+            .replace(/^###\s+(.*)$/gm, '<h3 style="font-weight:bold">$1</h3>')
+            .replace(/^##\s+(.*)$/gm, '<h2 style="font-weight:bold">$1</h2>')
+            .replace(/^#\s+(.*)$/gm, '<h1 style="font-weight:bold">$1</h1>')
 
             // Bold and italic
             .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')

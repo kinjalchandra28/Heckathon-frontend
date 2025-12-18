@@ -8,7 +8,7 @@ import { MarkdownDirective } from './markdown-html.directive';
   standalone: true,
   imports: [CommonModule, MarkdownDirective],
   templateUrl: './summary-response.component.html',
-  styleUrls: ['./summary-response.component.css']
+  styleUrls: ['./summary-response.component.scss']
 })
 export class SummaryResponseComponent {
   @Input() data!: SummaryData;
