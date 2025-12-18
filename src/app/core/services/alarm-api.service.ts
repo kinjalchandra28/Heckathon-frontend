@@ -19,7 +19,7 @@ export class AlarmApiService {
   private appwrite = inject(AppwriteService);
 
   // Appwrite function ID for alarm management API
-  private readonly FUNCTION_ID = '693f18b1001f03f4448f';
+  private readonly FUNCTION_ID = 'fn-alarm-management';
 
   /**
    * GET /disciplines - List all disciplines with types

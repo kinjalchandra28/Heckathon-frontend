@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.chart-container {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .x-axis path,
+:host ::ng-deep .y-axis path {
+  stroke: #475569;
+}
+
+:host ::ng-deep .x-axis line,
+:host ::ng-deep .y-axis line {
+  stroke: #475569;
+}
+
+:host ::ng-deep .x-axis text,
+:host ::ng-deep .y-axis text {
+  fill: #94a3b8;
+  font-size: 10px;
+}

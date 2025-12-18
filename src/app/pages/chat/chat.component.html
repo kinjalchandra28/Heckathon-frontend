@@ -7,17 +7,52 @@
         <div class="relative z-10 flex-1 overflow-y-auto p-6 space-y-4">
             @for (msg of messages; track $index) {
                 <div class="flex" [class.justify-end]="msg.sender === 'user'">
-                    <div class="max-w-[70%] px-4 py-3 rounded-2xl"
-                         [class]="msg.sender === 'user' ? 'bg-blue-600 text-white' : 'bg-white shadow-sm text-gray-800'">
-                        @if (msg.file) {
-                            <div class="flex items-center gap-2 mb-2 bg-white/20 rounded-lg px-2 py-1">
-                                <img src="assets/icons/file.svg" class="w-5 h-5" alt="">
-                                <span class="text-sm">{{ msg.file.name }}.{{ msg.file.type }}</span>
+                    <!-- User Message -->
+                    @if (msg.sender === 'user') {
+                        <div class="max-w-[70%] px-4 py-3 rounded-2xl bg-blue-600 text-white">
+                            @if (msg.file) {
+                                <div class="flex items-center gap-2 mb-2 bg-white/20 rounded-lg px-2 py-1">
+                                    <img src="assets/icons/file.svg" class="w-5 h-5" alt="">
+                                    <span class="text-sm">{{ msg.file.name }}.{{ msg.file.type }}</span>
+                                </div>
+                            }
+                            @if (msg.text) {
+                                <p class="m-0">{{ msg.text }}</p>
+                            }
+                        </div>
+                    }
+
+                    <!-- Agent Message -->
+                    @if (msg.sender === 'agent') {
+                        <div [class]="(msg.graphData || msg.metricsData) ? 'w-full max-w-[95%]' : 'max-w-[85%]'">
+                            @if (msg.summaryData) {
+                                <app-summary-response [data]="msg.summaryData"></app-summary-response>
+                            } @else if (msg.graphData) {
+                                <app-temperature-chart [data]="msg.graphData"></app-temperature-chart>
+                            } @else if (msg.metricsData) {
+                                <app-metrics-table [data]="msg.metricsData"></app-metrics-table>
+                            } @else if (msg.text) {
+                                <div class="px-4 py-3 rounded-2xl bg-white shadow-sm text-gray-800">
+                                    <p class="m-0">{{ msg.text }}</p>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+
+            <!-- Loading Indicator -->
+            @if (isLoading) {
+                <div class="flex">
+                    <div class="px-4 py-3 rounded-2xl bg-white shadow-sm">
+                        <div class="flex items-center gap-2">
+                            <div class="flex gap-1">
+                                <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+                                <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+                                <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
                             </div>
-                        }
-                        @if (msg.text) {
-                            <p class="m-0">{{ msg.text }}</p>
-                        }
+                            <span class="text-sm text-gray-500">Analyzing file...</span>
+                        </div>
                     </div>
                 </div>
             }

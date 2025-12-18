@@ -1,0 +1,79 @@
+{
+  "device": {
+    "id": "H00076803C251",
+    "name": "LT1 S005 WHGC",
+    "store_number": 2538,
+    "store_name": "FELTHAMDUKESGREEN",
+    "case_class": "LT",
+    "pack_name": "LT01"
+  },
+  "analysis_date": "2025-09-08T07:56:04",
+  "recommendations": [
+    {
+      "id": "refrigerant_undercharge",
+      "title": "Refrigerant Undercharge",
+      "confidence": 95,
+      "severity": "high",
+      "description": "Analysis indicates potential refrigerant undercharge based on elevated suction superheat readings and reduced cooling capacity. The system is showing signs of insufficient refrigerant charge which affects overall cooling efficiency and increases compressor runtime.",
+      "recommendations": [
+        "Check refrigerant charge level and top up if necessary",
+        "Inspect system for potential leaks at joints, valves, and connections",
+        "Verify proper operation of expansion valve and adjust if needed",
+        "Monitor superheat readings after any adjustments to confirm proper charge"
+      ],
+      "affected_metrics": ["suction_temperature", "superheat_tempdiff", "evaporator_valve_percentage"],
+      "related_data": {
+        "avg_superheat": 12.5,
+        "expected_superheat": 8.0,
+        "deviation_percentage": 56.25
+      }
+    },
+    {
+      "id": "coil_iced_defrost_failure",
+      "title": "Coil Iced / Defrost Failure",
+      "confidence": 88,
+      "severity": "high",
+      "description": "Detection of potential evaporator coil icing or defrost system malfunction. Analysis shows prolonged recovery times after defrost cycles and elevated air-on temperatures during normal operation, indicating restricted airflow across the evaporator.",
+      "recommendations": [
+        "Inspect evaporator coil for ice buildup and clean if necessary",
+        "Check defrost heater operation and replace if faulty",
+        "Verify defrost timer/control settings are appropriate for conditions",
+        "Ensure drain line is clear and functioning properly"
+      ],
+      "affected_metrics": ["defrost_temperature", "post_defrost_recovery", "air_on_temperature"],
+      "related_data": {
+        "avg_defrost_duration_minutes": 55,
+        "expected_defrost_duration_minutes": 35,
+        "avg_recovery_time_minutes": 42,
+        "expected_recovery_time_minutes": 25
+      }
+    }
+  ],
+  "summary": {
+    "title": "Coil iced / Defrost Failure",
+    "description": "The refrigeration case LT1 S005 WHGC is experiencing multiple issues that require attention. Primary concerns include refrigerant undercharge (95% confidence) and potential coil icing or defrost system problems (88% confidence). These issues are causing elevated temperatures during normal operation and extended recovery times after defrost cycles.",
+    "overall_health": "Critical",
+    "priority_actions": [
+      "Immediate inspection of refrigerant levels",
+      "Check evaporator coil condition",
+      "Review defrost cycle performance",
+      "Schedule maintenance visit within 48 hours"
+    ]
+  },
+  "metrics_summary": {
+    "critical_count": 2,
+    "warning_count": 0,
+    "okay_count": 8,
+    "total_alerts": 1,
+    "data_quality_score": 98.5
+  },
+  "metadata": {
+    "model_version": "1.0.0",
+    "analysis_type": "refrigeration_diagnostics",
+    "data_points_analyzed": 35662,
+    "time_range": {
+      "from": "2025-08-11T07:56:00",
+      "to": "2025-09-08T07:56:04"
+    }
+  }
+}
