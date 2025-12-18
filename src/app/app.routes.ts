@@ -29,11 +29,11 @@ export const routes: Routes = [
     //   },
     // ],
   },
-  {
-    path: 'flow-chart',
-    component: FlowChartEditorContainer,
-    // canActivate: [authGuard],
-  },
+  // {
+  //   path: 'flow-chart',
+  //   component: FlowChartEditorContainer,
+  //   // canActivate: [authGuard],
+  // },
   {
     path: 'chat',
     component: ChatComponent,
@@ -46,7 +46,7 @@ export const routes: Routes = [
   },
   {
     path: 'flow-chart/:id',
-    component: FlowChartComponent,
+    component: FlowChartEditorContainer,
     canActivate: [authGuard],
   },
 
