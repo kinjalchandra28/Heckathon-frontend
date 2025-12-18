@@ -39,5 +39,6 @@ export const routes: Routes = [
   },
 
   // Wildcard redirect
-  { path: '**', redirectTo: 'explore' },
+  { path: '**', redirectTo: 'flow-chart/id' },
+  // { path: '**', redirectTo: 'explore' },
 ];

@@ -1,5 +1,4 @@
-
-    @if (node) {
+    @if (agent() && module()) {
       <aside class="config-panel">
         <header class="panel-header">
           <div class="header-title">
@@ -23,11 +22,11 @@
             <h3 class="section-title">GENERAL</h3>
 
             <div class="form-group">
-              <label class="form-label">Label</label>
+              <label class="form-label">Name</label>
               <input
                 type="text"
                 class="form-input"
-                [ngModel]="node.label"
+                [ngModel]="module.name"
                 (ngModelChange)="onLabelChange($event)"
               />
             </div>
@@ -37,7 +36,7 @@
               <input
                 type="text"
                 class="form-input"
-                [ngModel]="node.description || ''"
+                [ngModel]="agent()?.description || ''"
                 (ngModelChange)="onDescriptionChange($event)"
                 placeholder="Auto-generated"
               />
@@ -140,3 +139,145 @@
         </footer>
       </aside>
     }
+
+    <!-- @if (node) {
+      <aside class="config-panel">
+        <header class="panel-header">
+          <div class="header-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span>Configuration</span>
+          </div>
+          <button class="close-btn" (click)="closePanel.emit()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </header>
+
+        <div class="panel-content">
+          General Section
+          <section class="config-section">
+            <h3 class="section-title">GENERAL</h3>
+
+            <div class="form-group">
+              <label class="form-label">Label</label>
+              <input
+                type="text"
+                class="form-input"
+                [ngModel]="node.label"
+                (ngModelChange)="onLabelChange($event)"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <input
+                type="text"
+                class="form-input"
+                [ngModel]="node.description || ''"
+                (ngModelChange)="onDescriptionChange($event)"
+                placeholder="Auto-generated"
+              />
+            </div>
+          </section>
+
+          Parameters Section
+          <section class="config-section">
+            <h3 class="section-title">PARAMETERS</h3>
+
+            <div class="form-group">
+              <label class="form-label">
+                Discipline
+                <span class="required-dot"></span>
+              </label>
+              <input
+                type="text"
+                class="form-input"
+                [ngModel]="node.parameters?.['discipline'] || ''"
+                (ngModelChange)="onParameterChange('discipline', $event)"
+                placeholder="refrigeration"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Type
+                <span class="required-dot"></span>
+              </label>
+              <input
+                type="text"
+                class="form-input"
+                [ngModel]="node.parameters?.['type'] || ''"
+                (ngModelChange)="onParameterChange('type', $event)"
+                placeholder="pack"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Device Class</label>
+              <input
+                type="text"
+                class="form-input"
+                [ngModel]="node.parameters?.['device_class'] || ''"
+                (ngModelChange)="onParameterChange('device_class', $event)"
+                placeholder="REFRIG_PACK"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Alarm ID
+                <span class="required-dot"></span>
+              </label>
+              <input
+                type="text"
+                class="form-input"
+                [ngModel]="node.parameters?.['alarm_id'] || ''"
+                (ngModelChange)="onParameterChange('alarm_id', $event)"
+                placeholder="Compressor 5 Starts per Hour"
+              />
+            </div>
+          </section>
+
+          Coordinates Section
+          <section class="config-section">
+            <h3 class="section-title">COORDINATES</h3>
+
+            <div class="coordinates-row">
+              <div class="form-group coord">
+                <label class="form-label">X</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [ngModel]="node.position.x"
+                  (ngModelChange)="onPositionChange('x', $event)"
+                />
+              </div>
+              <div class="form-group coord">
+                <label class="form-label">Y</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [ngModel]="node.position.y"
+                  (ngModelChange)="onPositionChange('y', $event)"
+                />
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <footer class="panel-footer">
+          <button class="delete-btn" (click)="deleteNode.emit(node.id)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+            Delete Node
+          </button>
+        </footer>
+      </aside>
+    } -->

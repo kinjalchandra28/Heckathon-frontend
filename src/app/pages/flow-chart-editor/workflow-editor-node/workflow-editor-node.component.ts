@@ -2,10 +2,11 @@ import { Component, computed, inject, input, output, ViewContainerRef, signal, e
 // import { WorkflowNode } from '../workflow-editor.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CdkDrag, CdkDragEnd, CdkDropList, CdkDragHandle } from '@angular/cdk/drag-drop';
+// import { CdkDrag, CdkDragEnd, CdkDropList, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { IconsService } from './icons.services';
 
-import {ProgramModule} from '../models/program-module.model';
+// import {ProgramModule} from '../models/program-module.model';
+import {  ProgramModule } from '../../../core/services/api-types';
 import { WorkflowNode } from '../models/workflow.model';
 const programModuleExample: ProgramModule = {
         "type": 0,
@@ -45,6 +46,7 @@ export class WorkflowEditorNodeComponent {
   module = input.required<ProgramModule>();
   isDragged = input(false);
   dragStart = output<{ event: MouseEvent; module: ProgramModule }>();
+  removeNodeAction = output<string>();
 
   hostClasses = computed(() => {
     const baseClasses = 'absolute flex flex-col p-3 rounded-lg shadow-lg text-white border-2 transition-transform duration-200 cursor-grab';
@@ -54,7 +56,7 @@ export class WorkflowEditorNodeComponent {
   });
 
   removeNode(id: string) {
-    // Implementation for removing a node
+    this.removeNodeAction.emit(id);
   }
   onMouseDown(event: MouseEvent) {
     this.dragStart.emit({ event, module: this.module() });
