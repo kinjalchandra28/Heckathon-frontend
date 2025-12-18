@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="flow-diagram">
+
+        <app-diagram-viewer
+        [modules]="modules">
+    
+        </app-diagram-viewer>
+    </div>
+
+    <div class="properties-panel">
+
+        <app-property-config-panel
+        [node]="selectedNode()"
+        
+              (labelChange)="onLabelChange($event)"
+              (descriptionChange)="onDescriptionChange($event)"
+              (parameterChange)="onParameterChange($event)"
+              (positionChange)="onPositionChange($event)"
+              (deleteNode)="onDeleteNode($event)"
+              (closePanel)="onClosePanel()">
+        </app-property-config-panel>
+    </div>
+</div>
