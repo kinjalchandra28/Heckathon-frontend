@@ -2,8 +2,8 @@
     <div class="flow-diagram">
 
         <app-diagram-viewer [modules]="modules" (deletedModule)="onDeletedModule($event)"
-            (selectedModule)="onSelectedModule($event)">
-            <!-- (removeNodeAction)="onDeleteNode($event)" -->
+            (selectedModule)="onSelectedModule($event)"
+            (locationUpdateModule)="onLocationUpdateModule($event)">
 
         </app-diagram-viewer>
         {{selectedModule() && isConfigPanelOpen}}

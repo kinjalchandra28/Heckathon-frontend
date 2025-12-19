@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormArray } from '@angular/forms';
 import { Agent } from '../../../core/models/agent.model';
 import { ProgramModule } from '../../../core/services/api-types';
+import { UuidGenerator } from '../services/uuid-generator';
 
 @Component({
   selector: 'app-property-config-panel',
@@ -20,7 +21,7 @@ import { ProgramModule } from '../../../core/services/api-types';
 })
 export class PropertyConfigPanel {
   private fb = inject(FormBuilder);
-
+  private uuidGenerator = inject(UuidGenerator);
   configForm = this.fb.group({
     alarmId: [''],
     name: [''],
@@ -114,5 +115,14 @@ export class PropertyConfigPanel {
     this.updatedModule.emit(module);
   
 
+  }
+  // to clone the current module, but change the id/name then emit to the parent
+  addNewModule(){
+    const newModule = JSON.parse(JSON.stringify(this.module())) as ProgramModule;
+    newModule.name = this.uuidGenerator.getUuid();
+    newModule.x = 0;
+    newModule.y = 0;
+    newModule.inputs = [];
+    this.updatedModule.emit(newModule);
   }
 }

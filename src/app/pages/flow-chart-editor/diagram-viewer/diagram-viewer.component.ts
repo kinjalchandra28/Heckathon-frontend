@@ -2,7 +2,7 @@
 import { Component, input, computed, signal, effect, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Connection } from '../models/program-module.model';
-import {  ProgramModule } from '../../../core/services/api-types';
+import { ProgramModule } from '../../../core/services/api-types';
 import { WorkflowEditorNodeComponent } from '../workflow-editor-node/workflow-editor-node.component';
 // import { WorkflowNode } from '../models/workflow.model';
 
@@ -19,6 +19,7 @@ import { WorkflowEditorNodeComponent } from '../workflow-editor-node/workflow-ed
 export class DiagramViewerComponent {
   modules = input.required<ProgramModule[]>();
   deletedModule = output<string>();
+  locationUpdateModule = output<ProgramModule>();
 
   // Local state for modules to allow for mutation (dragging)
   localModules = signal<ProgramModule[]>([]);
@@ -115,6 +116,15 @@ export class DiagramViewerComponent {
   }
 
   onDragEnd() {
+    const info = this.draggedModuleInfo();
+    const name = info?.module.name;
+
+    if (name) {
+      const updateModule = this.localModules().find(m => m.name === name);
+      if (updateModule) {
+        this.locationUpdateModule.emit(updateModule);
+      }
+    }
     this.draggedModuleInfo.set(null);
   }
 
@@ -122,8 +132,8 @@ export class DiagramViewerComponent {
     this.deletedModule.emit(name);
     this.localModules.update(modules => modules.filter(m => m.name !== name));
   }
-  
-  onSelectModule(m: ProgramModule){
+
+  onSelectModule(m: ProgramModule) {
     this.selectedModule.emit(m);
   }
 }
