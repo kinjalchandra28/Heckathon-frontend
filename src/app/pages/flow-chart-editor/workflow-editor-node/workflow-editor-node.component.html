@@ -1,16 +1,3 @@
-<!-- (cdkDragEnded)="onNodeMoved($event, node)" -->
-<!-- (cdkDragEnded)="onNodeMoved($event)" -->
-<!-- [cdkDragFreeDragPosition]="node().position" -->
-<!-- <div           cdkDrag
-[cdkDragFreeDragPosition]="node().position"
-               (click)="selectNode(node())"
-               class="canvas-node"
-               [class]="'node-' + node().type"
-               [class.selected]="selectedNode()"
-               [ngStyle]="{'top.px': node().position.x, 'left.px': node().position.y}"
-               > -->
-<!-- cdkDrag 
-                [cdkDragFreeDragPosition]="dragPositon" -->
 
 <div class="canvas-node" [class]="'node-' + module().type" [class.selected]="selectedNode()">
 
@@ -21,7 +8,5 @@
   </div>
 
   <div class="node-body">
-    <!-- <div class="port input-port" (mousedown)="startConnection($event, node(), 'input')"></div>
-    <div class="port output-port" (mousedown)="startConnection($event, node(), 'output')"></div> -->
   </div>
 </div>

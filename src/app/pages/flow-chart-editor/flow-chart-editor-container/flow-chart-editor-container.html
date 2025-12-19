@@ -8,7 +8,6 @@
         </app-diagram-viewer>
         {{selectedModule() && isConfigPanelOpen}}
     </div>
-    <!-- @if(true) { -->
     @if(isConfigPanelOpen() && selectedModule( )) {
         <div class="properties-panel">
             <app-property-config-panel 

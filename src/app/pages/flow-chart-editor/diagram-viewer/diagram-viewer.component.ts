@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { Connection } from '../models/program-module.model';
 import { ProgramModule } from '../../../core/services/api-types';
 import { WorkflowEditorNodeComponent } from '../workflow-editor-node/workflow-editor-node.component';
-// import { WorkflowNode } from '../models/workflow.model';
 
 
 

@@ -10,7 +10,6 @@ import { UuidGenerator } from '../services/uuid-generator';
 @Component({
   selector: 'app-property-config-panel',
   imports: [
-    // CdkDrag, 
     FormsModule,
     CommonModule,
     ReactiveFormsModule

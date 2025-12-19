@@ -1,11 +1,8 @@
 import { Component, computed, inject, input, output, ViewContainerRef, signal, effect  } from '@angular/core';
-// import { WorkflowNode } from '../workflow-editor.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// import { CdkDrag, CdkDragEnd, CdkDropList, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { IconsService } from './icons.services';
 
-// import {ProgramModule} from '../models/program-module.model';
 import {  ProgramModule } from '../../../core/services/api-types';
 import { WorkflowNode } from '../models/workflow.model';
 const programModuleExample: ProgramModule = {
@@ -81,10 +78,6 @@ export class WorkflowEditorNodeComponent {
   dragPositon = {x: 100, y: 100};
 
   constructor(private viewContainerRef: ViewContainerRef) {}
-
-  // startConnection(event: MouseEvent, node: WorkflowNode, portType: 'input' | 'output'): void {
-  //   // Logic to start a connection from this port
-  // }
 
   getIcon(nodeType: string | number) {
     const key = nodeType.toString();

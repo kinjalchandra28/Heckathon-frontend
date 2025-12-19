@@ -7,7 +7,6 @@ import { Agent } from "../../core/models/agent.model";
 })
 export class AgentService {
     private agents: {[key:string]:Agent} = {[AGENT.id]: AGENT}
-    // private agents: {[key:string]:Agent} = {};
 
     setAgent(agent: Agent): void {
         this.agents[agent.id] = agent;
