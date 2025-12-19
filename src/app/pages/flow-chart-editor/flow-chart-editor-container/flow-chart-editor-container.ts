@@ -88,6 +88,11 @@ export class FlowChartEditorContainer implements OnInit {
     this.onClosePanel();
     this.selectedModule.set(null);
   }
+  onLocationUpdateModule(module: ProgramModule) {
+    console.log('Updated module:', module);
+    this.modules = this.modules.filter(m => m.name !== module.name );
+    this.modules.push(module);
+  }
 }
 
 
