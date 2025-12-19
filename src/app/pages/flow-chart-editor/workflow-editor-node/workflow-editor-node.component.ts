@@ -47,6 +47,7 @@ export class WorkflowEditorNodeComponent {
   isDragged = input(false);
   dragStart = output<{ event: MouseEvent; module: ProgramModule }>();
   removeNodeAction = output<string>();
+  
 
   hostClasses = computed(() => {
     const baseClasses = 'absolute flex flex-col p-3 rounded-lg shadow-lg text-white border-2 transition-transform duration-200 cursor-grab';

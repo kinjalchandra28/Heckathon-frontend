@@ -14,11 +14,7 @@
             <app-property-config-panel 
                 [module]="selectedModule()"
                 [agent]="agent()"
-                (labelChange)="onLabelChange($event)" 
-                (descriptionChange)="onDescriptionChange($event)"
-                (parameterChange)="onParameterChange($event)" 
-                (positionChange)="onPositionChange($event)"
-                (deleteNode)="onDeleteNode($event)" 
+                (updatedModule)="onUpdateModule($event)"
                 (closePanel)="onClosePanel()">
             </app-property-config-panel>
         </div>

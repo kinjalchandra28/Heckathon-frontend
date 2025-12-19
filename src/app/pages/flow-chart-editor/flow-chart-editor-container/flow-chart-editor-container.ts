@@ -43,8 +43,7 @@ export class FlowChartEditorContainer implements OnInit {
 
     // Receive
     this.route.paramMap.subscribe(params => {
-      // const id = params.get('id');
-      const id = '69408eee0038af5492e7';
+      const id = params.get('id');
       const agent = this.agentService.getAgentById(id || '');
       if (agent) { this.agent.set(agent); }
       console.log('Retrieved agent for id:', id, agent);
@@ -54,19 +53,6 @@ export class FlowChartEditorContainer implements OnInit {
 
   }
 
-
-  onLabelChange(event: any) {
-    console.log('Label changed:', event);
-  }
-  onDescriptionChange(event: any) {
-    console.log('Description changed:', event);
-  }
-  onParameterChange(event: any) {
-    console.log('Parameter changed:', event);
-  }
-  onPositionChange(event: any) {
-    console.log('Position changed:', event);
-  }
   onDeleteNode(event: string) {
     this.modules = this.modules.filter(module => module.name !== event);
     console.log('Node deleted:', event);
@@ -91,6 +77,14 @@ export class FlowChartEditorContainer implements OnInit {
     console.log('Deleted module:', name);
     // this.isConfigPanelOpen.set(false);
     this.modules = this.modules.filter(module => module.name !== name);
+    this.onClosePanel();
+    this.selectedModule.set(null);
+  }
+
+  onUpdateModule(module: ProgramModule) {
+    console.log('Updated module:', module);
+    this.modules = this.modules.filter(m => m.name !== module.name );
+    this.modules.push(module);
     this.onClosePanel();
     this.selectedModule.set(null);
   }
